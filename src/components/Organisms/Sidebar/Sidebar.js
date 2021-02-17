@@ -1,4 +1,6 @@
 import React from 'react';
+import withContext from 'hoc/withContext';
+
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import Mathilda1 from 'assets/images/Mathilda1.png';
@@ -21,7 +23,7 @@ const Wrapper = styled.div`
   align-items: center;
   flex-direction: column;
   background-color: ${({ activecolor, theme }) => theme[activecolor]};
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
 `;
 
 const IconWrapper = styled.div`
@@ -44,8 +46,8 @@ const StyledLogoutButton = styled(ButtonIcon)`
   margin-top: auto;
 `;
 
-const Sidebar = ({ pageType }) => (
-  <Wrapper activecolor={pageType}>
+const Sidebar = ({ pageContext }) => (
+  <Wrapper activecolor={pageContext}>
     <StyledLogoLink as={NavLink} to="/" />
     <IconWrapper>
       <ButtonIcon as={NavLink} to="/notes" icon={penIcon} activeClass="active" />
@@ -57,11 +59,11 @@ const Sidebar = ({ pageType }) => (
 );
 
 Sidebar.propTypes = {
-  pageType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
+  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']),
 };
 
 Sidebar.defaultProps = {
-  pageType: 'notes',
+  pageContext: 'notes',
 };
 
-export default Sidebar;
+export default withContext(Sidebar);

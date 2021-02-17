@@ -1,4 +1,5 @@
 import React from 'react';
+import withContext from 'hoc/withContext';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Button } from 'components/atoms/Button/Button';
@@ -23,7 +24,32 @@ const WrapperHeader = styled.div`
   margin: 0 0 5vh 5vw;
   max-width: 660px;
   text-align: center;
+
+  @media screen and (max-width: 1100px) {
+    margin: 0 0 5vh 0vw;
+  }
 `;
+
+const StyledHeader = styled(Header)`
+  @media screen and (max-width: 1060px) {
+    max-width: 500px;
+  }
+  @media screen and (max-width: 860px) {
+    max-width: 500px;
+    font-size: 35px;
+  }
+  @media screen and (max-width: 760px) {
+    max-width: 400px;
+  }
+  @media screen and (max-width: 620px) {
+    max-width: 300px;
+    font-size: 30px;
+  }
+  @media screen and (max-width: 540px) {
+    max-width: 250px;
+  }
+`;
+
 const StyledAvatar = styled.img`
   position: absolute;
   width: 120px;
@@ -32,12 +58,26 @@ const StyledAvatar = styled.img`
   border-radius: 50%;
   top: 0;
   right: -10vw;
+  @media screen and (max-width: 1060px) {
+    width: 100px;
+    height: 100px;
+    right: 0;
+  }
+  @media screen and (max-width: 660px) {
+    width: 80px;
+    height: 80px;
+  }
 `;
 
 const StyledParagraph = styled(Paragraph)`
   font-size: ${({ theme }) => theme.fontSize.l};
   font-weight: ${({ theme }) => theme.light};
   letter-spacing: 1px;
+  line-height: 30px;
+
+  @media screen and (max-width: 860px) {
+    font-size: ${({ theme }) => theme.fontSize.m};
+  }
 `;
 
 const StyledLink = styled.a`
@@ -52,33 +92,26 @@ const StyledLink = styled.a`
   background-position: 50%;
 `;
 
-const DateInfo = styled(Paragraph)`
-  margin: 0;
-  font-weight: ${({ theme }) => theme.bold};
-  font-size: ${({ theme }) => theme.fontSize.m};
-  color: ${({ activeColor, theme }) => theme[activeColor]};
-  text-align: left;
-`;
+const DetailsTemplate = ({ pageContext, title, content, twitterName, articleUrl }) => {
+  return (
+    <UserTemplate pageType={pageContext}>
+      <WrapperHeader>
+        <StyledHeader big>{title}</StyledHeader>
+        {pageContext === 'twitters' && (
+          <StyledAvatar src={`https://unavatar.now.sh/facebook/${twitterName}`} />
+        )}
+        {pageContext === 'articles' && <StyledLink href={articleUrl} />}
+      </WrapperHeader>
+      <Wrapper>
+        <StyledParagraph>{content}</StyledParagraph>
+        <NavLink to={`/${pageContext}`}>
+          <Button secondary activeColor={pageContext}>
+            Go Back
+          </Button>
+        </NavLink>
+      </Wrapper>
+    </UserTemplate>
+  );
+};
 
-const DetailsTemplate = ({ pageType, title, content, twitterName, articleUrl, created }) => (
-  <UserTemplate pageType={pageType}>
-    <WrapperHeader>
-      <Header big>{title}</Header>
-      <DateInfo activeColor={pageType}>{created}</DateInfo>
-      {pageType === 'twitters' && (
-        <StyledAvatar src={`https://unavatar.now.sh/facebook/${twitterName}`} />
-      )}
-      {pageType === 'articles' && <StyledLink href={articleUrl} />}
-    </WrapperHeader>
-    <Wrapper>
-      <StyledParagraph>{content}</StyledParagraph>
-      <NavLink to={`/${pageType}`}>
-        <Button secondary activeColor={pageType}>
-          Go Back
-        </Button>
-      </NavLink>
-    </Wrapper>
-  </UserTemplate>
-);
-
-export default DetailsTemplate;
+export default withContext(DetailsTemplate);

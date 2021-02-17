@@ -1,9 +1,24 @@
-export const removeItem = (itemType, id) => {
+export const REMOVE_ITEM = 'REMOVE_ITEM';
+export const ADD_ITEM = 'ADD_ITEM';
+
+export const removeItem = (itemType, id) => ({
+  type: REMOVE_ITEM,
+  payload: {
+    itemType,
+    id,
+  },
+});
+
+export const addItem = (itemType, content) => {
+  const getId = () => `${Math.random().toString(36).substr(2, 9)}`;
   return {
-    type: 'REMOVE_ITEM',
+    type: ADD_ITEM,
     payload: {
       itemType,
-      id,
+      item: {
+        id: getId(),
+        ...content,
+      },
     },
   };
 };

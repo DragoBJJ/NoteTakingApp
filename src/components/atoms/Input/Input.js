@@ -13,7 +13,7 @@ const Input = styled.input`
   ::placeholder {
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: ${({ theme }) => theme.grey300};
+    color: ${({ theme }) => theme.black};
   }
 
   ${({ search }) =>

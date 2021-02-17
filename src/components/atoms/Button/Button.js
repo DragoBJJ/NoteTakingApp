@@ -10,8 +10,8 @@ export const Button = styled.button`
   outline: none;
   font-family: 'Montserrat';
   font-size: 18px;
+  font-weight: bold;
   text-transform: uppercase;
-  font-weight: 600;
   letter-spacing: 1px;
 
   ${({ secondary }) =>
