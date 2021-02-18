@@ -2,13 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import GridTemplate from 'Templates/GridTemplate';
 import Card from 'components/Molecules/Card/Card';
-// import { fetchItems } from 'Redux/Actions';
 
 const Twitters = ({ twitters }) => {
-  // useEffect(() => {
-  //   fetchTwitters();
-  // }, []);
-
   return (
     <GridTemplate>
       {twitters.map((item) => (
@@ -17,10 +12,6 @@ const Twitters = ({ twitters }) => {
     </GridTemplate>
   );
 };
-
-// const mapDispatchToProps = (dispatch) => ({
-//   fetchTwitters: () => dispatch(fetchItems('twitters')),
-// });
 
 const mapStateToProps = ({ twitters }) => ({ twitters });
 

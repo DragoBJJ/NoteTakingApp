@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Card from 'components/Molecules/Card/Card';
 import { connect } from 'react-redux';
 
 import withContext from 'hoc/withContext';
@@ -80,17 +81,20 @@ const GridTemplate = ({ children, pageContext, currentState = [] }) => {
 
   useEffect(() => {
     searchCurrentItem();
-  }, [inputValue]);
+  }, [inputValue, pageContext, currentState]);
 
   return (
     <UserTemplate>
-      {console.log(searchItems)}
       <Wrapper>
         <WrapperHeading>
           <Input activeColor={pageContext} onChange={visibleInput} search placeholder="Search" />
           <StyledHeading big>{pageContext}</StyledHeading>
         </WrapperHeading>
-        <HeroWrapper>{children}</HeroWrapper>
+        <HeroWrapper>
+          {children !== undefined
+            ? children
+            : searchItems.map((item) => <Card key={item.id} {...item} />)}
+        </HeroWrapper>
         <StyledButtonIcon onClick={handleVisible} activeColor={pageContext}>
           {!isVisible ? '+' : '-'}
         </StyledButtonIcon>
@@ -100,7 +104,6 @@ const GridTemplate = ({ children, pageContext, currentState = [] }) => {
   );
 };
 GridTemplate.propsType = {
-  children: PropsTypes.arrayOf(PropsTypes.object),
   pageContext: PropsTypes.oneOf(['notes', 'twitters', 'articles']),
 };
 
